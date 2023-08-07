@@ -1,7 +1,10 @@
 #include "VstManager.h"
 
 VstManager::VstManager()
+    :   dataManager()
 {
+    createModel();
+
     createCentralWidget();
 
     setWindowIcon(QIcon(":images/vst"));
@@ -14,6 +17,8 @@ void VstManager::createCentralWidget()
 
     searchBar = new QLineEdit(centralWidget);
     searchResult = new QTreeView(centralWidget);
+    searchResult->setRootIsDecorated(false);
+    searchResult->setModel(model);
 
     QVBoxLayout *centralLayout = new QVBoxLayout();
     centralLayout->addWidget(searchBar);
@@ -22,4 +27,15 @@ void VstManager::createCentralWidget()
     centralWidget->setLayout(centralLayout);
 
     setCentralWidget(centralWidget);
+}
+
+void VstManager::createModel()
+{
+    model = new QStandardItemModel(this);
+    model->setHorizontalHeaderLabels(dataManager.getHeaderLabelList());
+
+    QList<DataInRow> dataInRowList = dataManager.getDataInRowList();
+    foreach(DataInRow row, dataInRowList) {
+        model->appendRow(row.data);
+    }
 }

@@ -2,20 +2,20 @@
 
 DataManager::DataManager(QWidget* parent)
     :   parentWidget(parent),
-        DATA_FILE("data.csv")
+        DATA_FILE("data.csv"),
+    HEADER_LABEL_LIST({ "Tên bộ VST", "Ghi chú" })
 {
     loadData();
 }
 
-Data DataManager::header() const
+QList<DataInRow> DataManager::getDataInRowList() const
 {
-    const quint8 HEADER_INDEX = 0; // The first line of data is the header
-    return data[HEADER_INDEX];
+    return dataInRowList;
 }
 
-Data DataManager::dataAt(const quint32 index) const
+QStringList DataManager::getHeaderLabelList() const
 {
-    return data[index];
+    return HEADER_LABEL_LIST;
 }
 
 void DataManager::loadData()
@@ -30,10 +30,10 @@ void DataManager::loadData()
     QTextStream inp(&dataFile);
     while(!inp.atEnd()) {
         QString line = inp.readLine();
+        line = line.trimmed();
+
         QStringList rawData = line.split(";");
 
-        const quint8 VST_NAME_INDEX = 0;
-        const quint8 NOTE_INDEX = 1;
-        data << Data(rawData[VST_NAME_INDEX], rawData[NOTE_INDEX]);
+        dataInRowList << DataInRow(rawData);
     }
 }

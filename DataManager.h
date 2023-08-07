@@ -10,12 +10,20 @@
 #include <QWidget>
 #include <QObject>
 #include <QStringList>
+#include <QStandardItem>
 
-struct Data
+struct DataInRow
 {
-    Data(const QString& vstName, const QString& note);
-    QString vstName;
-    QString note;
+    DataInRow(const QStringList& rawData) {
+        const quint8 VST_NAME_INDEX = 0;
+        const quint8 NOTE_INDEX = 1;
+        QStandardItem *vstName = new QStandardItem(rawData[VST_NAME_INDEX]);
+        QStandardItem *note = new QStandardItem(rawData[NOTE_INDEX]);
+        data << vstName;
+        data << note;
+    }
+
+    QList<QStandardItem*> data;
 };
 
 class DataManager
@@ -23,16 +31,18 @@ class DataManager
 public:
     DataManager(QWidget* parent = nullptr);
 
-    Data header() const;
-    Data dataAt(const quint32 index) const;
+    QList<DataInRow> getDataInRowList() const;
+    QStringList getHeaderLabelList() const;
 
 private:
     void loadData();
 
-    QList<Data> data;
     QWidget *parentWidget;
 
+    QList<DataInRow> dataInRowList;
+
     const QString DATA_FILE;
+    const QStringList HEADER_LABEL_LIST;
 };
 
 #endif // DATAMANAGER_H
