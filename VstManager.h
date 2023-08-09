@@ -9,6 +9,7 @@
 #include <QPushButton>
 #include <QApplication>
 #include <QLineEdit>
+#include <QAbstractItemView>
 #include <QStandardItem>
 #include <QStandardItemModel>
 #include <QTreeView>
@@ -23,7 +24,7 @@ public:
     VstManager();
 
 private slots:
-    void typing(const QString& keyword);
+    void typing(QString keyword);
 
 private:
     void createCentralWidget();
