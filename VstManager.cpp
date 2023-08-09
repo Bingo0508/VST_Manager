@@ -61,7 +61,7 @@ void VstManager::createCentralWidget()
 
     setCentralWidget(centralWidget);
 
-    connect(searchBar, SIGNAL(textChanged(QString)), this, SLOT(typing(QString)));
+    connect(searchBar, SIGNAL(textChanged(QString)), this, SLOT(search(QString)));
 }
 
 void VstManager::createModel()
