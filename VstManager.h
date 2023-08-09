@@ -24,7 +24,7 @@ public:
     VstManager();
 
 private slots:
-    void typing(QString keyword);
+    void search(QString keyword);
 
 private:
     void createCentralWidget();

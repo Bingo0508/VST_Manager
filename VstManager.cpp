@@ -11,7 +11,7 @@ VstManager::VstManager()
     setWindowTitle(tr("Trình quản lý VST"));
 }
 
-void VstManager::typing(QString keyword)
+void VstManager::search(QString keyword)
 {
     if(keyword.isEmpty()) {
         searchResult->setModel(model);
